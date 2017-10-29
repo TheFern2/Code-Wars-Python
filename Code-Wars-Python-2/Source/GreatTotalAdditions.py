@@ -3,11 +3,14 @@ from itertools import combinations
 from math import factorial
 import cProfile
 
-def removefirstindex(list):
+def remove_first_index(list):
     templist = []
     for i in range(1, len(list)):
         templist.append(list[i])
     return templist
+
+def permutation_count(n, r):
+    return int(factorial(n) / factorial((n - r)))
 
 def gta(limit, *args): # find the base_list first
     digits = []
@@ -16,9 +19,6 @@ def gta(limit, *args): # find the base_list first
     digitsList = []
     howManyDigits = 0
     tempList = []
-    multiplier7 = [1, 2, 15, 80, 300, 720, 840]
-    multiplier8 = [1, 2, 18, 120, 600, 2160, 5040, 5760]
-    multiplier9 = [1, 2, 21, 168, 1050, 5040, 17640, 40320, 45360]
 
     # convert numbers to list of individual numbers as strings
     for i in range(len(args)):
@@ -34,50 +34,54 @@ def gta(limit, *args): # find the base_list first
     # if number is duplicated move to next list.
     # also make sure digits lenght is same as limit
     # inner as many index in digitList
+    # [1, 5, 6, 2, 7, 3, 4, 8, 9]
+    j = 0
     while len(digits) != limit:
-        for n in range(len(digitsList)):
-            # if sublist of nums is empty
-            if not digitsList[n]:
+        #for n in range(len(digitsList)):
+        # if sublist of nums is empty
+        if not digitsList[j]:
+            if j < len(args) -1:
+                j = j + 1
                 continue
-            # if current digit already exists
-            if digitsList[n][0] in digits:
-                tempList = removefirstindex(digitsList[n])
-                digitsList.pop(n)
-                digitsList.insert(n, tempList)
+            if j == len(args) -1:
+                j = 0
+        # if current digit already exists
+        if digitsList[j][0] in digits:
+            tempList = remove_first_index(digitsList[j])
+            digitsList.pop(j)
+            digitsList.insert(j, tempList)
+            if j < len(args) -1:
+                j = j + 1
+            if j == len(args) -1:
+                j = 0
+        # else append current digit to digits list
+        else:
+            digits.append(digitsList[j][0])
+            tempList = remove_first_index(digitsList[j])
+            digitsList.pop(j)
+            digitsList.insert(j, tempList)
+            if j < len(args) -1:
+                j = j + 1
                 continue
-            # else append current digit to digits list
-            else:
-                digits.append(digitsList[n][0])
-                tempList = removefirstindex(digitsList[n])
-                digitsList.pop(n)
-                digitsList.insert(n, tempList)
+            if j == len(args) -1:
+                j = 0
     # Now that we are done working with string objects we
     # can convert the digits into int
     digits = list(map(int, digits))
 
-    #print(digits)
     grandSum = 0
     #add grand total
-    if len(digits) < 7:
-        for i in range(1, limit + 1):
-            for j in permutations(digits, i):
-                grandSum =+ grandSum + sum(j)
-                #print(j)
-            print("Sum after one full permutation = ", grandSum)
+    #if len(digits) < 7:
+    # for i in range(1, limit + 1):
+    #     for j in permutations(digits, i):
+    #         grandSum =+ grandSum + sum(j)
+    #         print(j)
+    #     print("Sum after one full permutation = ", grandSum)
 
-    if len(digits) >= 7:
-        for i in range(1, limit):
-            if len(digits) == 7:
-                grandSum = grandSum + (sum(digits)) * (len(digits) -1) * multiplier7[i]
-            if len(digits) == 8:
-                grandSum = grandSum + (sum(digits)) * (len(digits) -1) * multiplier8[i]
-            if len(digits) == 9:
-                grandSum = grandSum + (sum(digits)) * (len(digits) -1) * multiplier9[i]
-            print("New iteration", grandSum)
-        grandSum = grandSum + sum(digits)
+    for i in range(2, limit + 1):
+        grandSum = grandSum + (sum(digits) * (permutation_count(len(digits), i) / len(digits) * i))
 
+    grandSum = grandSum + sum(digits)
     print(grandSum)
 
     return grandSum
-
-cProfile.run('gta(9, 153456, 2339, 421876)')
