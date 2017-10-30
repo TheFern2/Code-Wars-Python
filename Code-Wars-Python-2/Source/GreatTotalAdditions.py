@@ -19,7 +19,7 @@ def gta(limit, *args): # find the base_list first
     digitsList = []
     howManyDigits = 0
     tempList = []
-
+    print(args)
     # convert numbers to list of individual numbers as strings
     for i in range(len(args)):
         digitsList.append(list(str(args[i])))
@@ -52,6 +52,7 @@ def gta(limit, *args): # find the base_list first
             digitsList.insert(j, tempList)
             if j < len(args) -1:
                 j = j + 1
+                continue
             if j == len(args) -1:
                 j = 0
         # else append current digit to digits list
