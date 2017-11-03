@@ -81,7 +81,7 @@ def gta(limit, *args): # find the base_list first
 
     for i in range(2, limit + 1):
         grandSum = grandSum + (sum(digits) * (permutation_count(len(digits), i) / len(digits) * i))
-
+        print("Iteration", i, "Sum", grandSum)
     grandSum = grandSum + sum(digits)
     print(grandSum)
 
