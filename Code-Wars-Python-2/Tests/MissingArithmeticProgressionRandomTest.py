@@ -14,6 +14,7 @@ class MissingArithmeticProgressionRandomTests(unittest.TestCase):
         #test.describe('Testing sequence of {} numbers'.format(steps))
         actual = find_missing2(bad_sequence)
         self.assertEqual(actual, expected)
+        print("Actual ", actual, "Expected ", expected)
 
     def testRandom(self):
         for i in range(10):

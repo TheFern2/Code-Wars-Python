@@ -11,7 +11,7 @@ def encryptSol(text, rule):
 
 class BasicEncryptionRandomTest(unittest.TestCase):
     def test(self):
-        random.seed(int(time.time()))
+        #random.seed(int(time.time()))
         chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!"#$%&\'()*+,-./:;?@[\\]^_`{|}~ \t\n\r\x0b\x0c'
         for i in range(50):
             text = ""
