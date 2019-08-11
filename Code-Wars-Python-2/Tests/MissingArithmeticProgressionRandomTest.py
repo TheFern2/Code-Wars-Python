@@ -20,10 +20,10 @@ class MissingArithmeticProgressionRandomTests(unittest.TestCase):
         for i in range(10):
             base = 1 + i * 5
             self.fixture(base, 10)
-            # self.fixture(base, 100)
-            # self.fixture(base, 1000)
-            # self.fixture(base, 10000)
-            # self.fixture(base, 100000)
+            self.fixture(base, 100)
+            self.fixture(base, 1000)
+            self.fixture(base, 10000)
+            self.fixture(base, 100000)
 
 
 if __name__ == '__main__':
